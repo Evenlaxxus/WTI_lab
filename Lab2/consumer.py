@@ -6,11 +6,14 @@ redis = Redis(host='localhost', port=6379)
 
 
 def consumer():
+    start = time.time()
     while True:
         elem = redis.lrange("queue", 0, 1)
         redis.ltrim("queue", 1, -1)
         print(elem)
-        time.sleep(0.01)
+        if time.time() - start >= 10:
+            break
+        time.sleep(0.25)
 
 
 if __name__ == "__main__":
