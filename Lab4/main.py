@@ -55,8 +55,19 @@ def zad6(userID):
     return genre_user_ratings
 
 
+def zad7(userID):
+    user_rated_movies, genres = zad1()
+    genre_ratings = zad5()
+    genre_user_ratings = zad6(userID)
+    user_profile = {'userID': userID}
+    for genre in genres:
+        user_profile[genre] = genre_user_ratings[genre] - genre_ratings[genre]
+    return user_profile
+
+
 if __name__ == "__main__":
-    # zad4()
-    # print(zad5())
+    zad4()
+    print(zad5())
     print(zad6(78))
+    print(zad7(78))
 
