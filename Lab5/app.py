@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-from logic import Controller
+from controller import Controller
 
 app = Flask(__name__)
 
