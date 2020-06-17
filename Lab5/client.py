@@ -52,10 +52,10 @@ def client():
         'POST')
     time.sleep(0.01)
     print_request(requests.delete(
-            serverUrl + 'rating',
+            serverUrl + 'ratings',
             data=json.dumps({
-            "userID": 170,
-            "movieID": 1
+            "userID": 1234,
+            "movieID": 903
         }),
             headers={"Content-Type": "application/json"}),
         'DELETE')
