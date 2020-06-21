@@ -132,7 +132,3 @@ def client():
 
 if __name__ == "__main__":
         client()
-
-        # while True:
-        #     client()
-        #     time.sleep(0.01)
