@@ -50,32 +50,22 @@ if __name__ == "__main__":
     keyspace = "user_ratings"
     table = "user_avg_rating"
 
-    # utworzenia połączenia z klastrem
     cluster = Cluster(['127.0.0.1'], port=9042)
     session = cluster.connect()
 
-    # utworzenie nowego keyspace
     create_keyspace(session, keyspace)
 
-    # ustawienie używanego keyspace w sesji
     session.set_keyspace(keyspace)
 
-    # użycie dict_factory pozwala na zwracanie słowników
-    # znanych z języka Python przy zapytaniach do bazy danych
     session.row_factory = dict_factory
 
-    # tworzenie tabeli
     create_table(session, keyspace, table)
 
-    # umieszczanie danych w tabeli
     push_data_table(session, keyspace, table, userId=1337, avgMovieRating=4.2)
 
-    # pobieranie zawartości tabeli i wyświetlanie danych
     get_data_table(session, keyspace, table)
 
-    # czyszczenie zawartości tabeli
     clear_table(session, keyspace, table)
     get_data_table(session, keyspace, table)
 
-    # usuwanie tabeli
     delete_table(session, keyspace, table)
