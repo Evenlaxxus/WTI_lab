@@ -1,4 +1,7 @@
+import json
+
 import pandas as pd
+from redis import Redis
 
 
 def readData():
@@ -13,6 +16,7 @@ def readData():
 class Controller:
     def __init__(self):
         self.data, self.genres = readData()
+        self.redis = Redis(host='localhost', port=6379)
 
     @staticmethod
     def df_to_dict(df):
@@ -67,6 +71,9 @@ class Controller:
 
     def addRow(self, row):
         self.data = pd.concat([self.data, pd.json_normalize(row)])
+        userID = row["userID"]
+        if self.redis.exists(userID):
+            self.redis.set(userID, json.dumps(self.user_profile(userID)))
         return row
 
     def deleteRow(self, request_data):

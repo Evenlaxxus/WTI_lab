@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request
 
 from controller import Controller
@@ -38,6 +40,16 @@ def genre_rating_all_users():
 @app.route('/avg-genre-rating/<userID>', methods=['GET'])
 def genre_rating_for_user(userID):
     return controller.genre_user_ratings(userID), {'Content-Type': 'application/json'}
+
+
+@app.route('/user-profile/<userID>', methods=['GET'])
+def get_user_profile(userID):
+    if controller.redis.exists(userID):
+        user_profile = controller.redis.get(userID)
+    else:
+        user_profile = controller.user_profile(userID)
+        controller.redis.set(userID, json.dumps(user_profile))
+    return user_profile, {'Content-Type': 'application/json'}
 
 
 if __name__ == '__main__':
